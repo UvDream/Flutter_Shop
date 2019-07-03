@@ -74,4 +74,22 @@ class _HomePageState extends State<HomePage> {
       return print(e);
     }
   }
+
+  
+  // Future getHttp(String TypeText)async{
+  //   try{
+  //     Response response;
+  //     var data={'name':TypeText};
+  //     response = await Dio().post(
+  //       "https://www.easy-mock.com/mock/5c60131a4bed3a6342711498/baixing/post_dabaojian",
+  //         queryParameters:data
+  //     );
+  //     return response.data;
+  //   }catch(e){
+  //     return print(e);
+  //   }
+  // }
+
+
+
 }
