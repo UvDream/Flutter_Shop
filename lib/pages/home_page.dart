@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
 import '../config/httpHeaders.dart';
+import '../service/service_method.dart';
 // class HomePage extends StatefulWidget {
 //   @override
 //   _HomePageState createState() => _HomePageState();
@@ -76,7 +76,6 @@ import '../config/httpHeaders.dart';
 //     }
 //   }
 
-  
 //   // Future getHttp(String TypeText)async{
 //   //   try{
 //   //     Response response;
@@ -90,9 +89,56 @@ import '../config/httpHeaders.dart';
 //   //     return print(e);
 //   //   }
 //   // }
+// }
+// class HomePage extends StatefulWidget {
+//   @override
+//   _HomePageState createState() => _HomePageState();
+// }
 
+// class _HomePageState extends State<HomePage> {
+//   String showText='还没数据';
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       child: Scaffold(
+//         appBar: AppBar(title: Text("首页"),),
+//         body:SingleChildScrollView(
+//           child: Column(
+//             children: <Widget>[
+//               RaisedButton(
+//                 onPressed: _btn,
+//                 child: Text("请求数据"),
+//               ),
+//               Text(showText)
+//             ],
+//           ),
+//         )
+//       ),
+//     );
+//   }
+//   void _btn(){
+//     print("开始获取极客数据");
+//     getHttp().then(
+//       (val){
+//         setState(() {
+//           showText=val['data']['name'].toString();
+//         });
 
-
+//       }
+//     );
+//   }
+//   Future getHttp()async{
+//     try{
+//       Response response;
+//       Dio dio=new Dio();
+//       dio.options.headers=httpHeaders;
+//       response=await dio.get("https://time.geekbang.org/serv/v1/column/newAll");
+//       print(response);
+//       return response;
+//     }catch(e){
+//       return e;
+//     }
+//   }
 // }
 class HomePage extends StatefulWidget {
   @override
@@ -100,47 +146,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String showText='还没数据';
+  String homePageContent = "正在获取数据";
+
+  @override
+  void initState() {
+    getHomePageContent().then((val) {
+      setState(() {
+        homePageContent = val.toString();
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        appBar: AppBar(title: Text("首页"),),
-        body:SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              RaisedButton(
-                onPressed: _btn,
-                child: Text("请求数据"),
-              ),
-              Text(showText)
-            ],
-          ),
-        )
-      ),
+          appBar: AppBar(title: Text("百姓生活+")),
+          body: SingleChildScrollView(
+            child: Text(homePageContent),
+          )),
     );
-  }
-  void _btn(){
-    print("开始获取极客数据");
-    getHttp().then(
-      (val){
-        setState(() {
-          showText=val['data']['name'].toString();
-        });
-
-      }
-    );
-  }
-  Future getHttp()async{
-    try{
-      Response response;
-      Dio dio=new Dio();
-      dio.options.headers=httpHeaders;
-      response=await dio.get("https://time.geekbang.org/serv/v1/column/newAll");
-      print(response);
-      return response;
-    }catch(e){
-      return e;
-    }
   }
 }
