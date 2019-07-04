@@ -200,7 +200,7 @@ class SwiperDiy extends StatelessWidget {
       height: 180.0,
       child: Swiper(
         itemBuilder: (BuildContext context,int index){
-          return Image.network("${swiperDateList[index]['image']}");
+          return Image.network("${swiperDateList[index]['image']}",fit: BoxFit.fill,);
         },
         itemCount:swiperDateList.length,
         pagination: SwiperPagination(),
