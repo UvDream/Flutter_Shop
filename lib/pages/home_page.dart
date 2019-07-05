@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../config/httpHeaders.dart';
 import '../service/service_method.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'dart:convert';
