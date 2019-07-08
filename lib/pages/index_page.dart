@@ -23,7 +23,7 @@ class _IndexPageState extends State<IndexPage> {
         icon: Icon(CupertinoIcons.profile_circled), title: Text('会员中心'))
   ];
   // 对应页面
-  final List tabBodies = [HomePage(), CategoryPage(), CarPage(), MemberPage()];
+  final List<Widget> tabBodies = [HomePage(), CategoryPage(), CarPage(), MemberPage()];
   int currentIndex = 0;
   var currentPage;
   // 初始化
@@ -49,7 +49,10 @@ class _IndexPageState extends State<IndexPage> {
                   currentPage = tabBodies[index];
                 })
               })),
-      body: currentPage,
+      body:IndexedStack(
+        index: currentIndex,
+        children: tabBodies,
+      )
     );
   }
 }
