@@ -191,7 +191,6 @@ class _HomePageState extends State<HomePage> {
 
 // 轮播图
 class SwiperDiy extends StatelessWidget {
-
   final List swiperDateList;
   SwiperDiy({Key key,this.swiperDateList}):super(key:key);
 
@@ -199,6 +198,11 @@ class SwiperDiy extends StatelessWidget {
   Widget build(BuildContext context) {
     // 设置尺寸
     ScreenUtil.instance=ScreenUtil(width: 750,height: 1334)..init(context);
+
+    print('设备的像素密度:${ScreenUtil.pixelRatio}');
+    print('设备的高:${ScreenUtil.screenHeight}');
+    print('设备的宽:${ScreenUtil.screenWidth}');
+
     return Container(
       height: ScreenUtil().setHeight(333),
       width: ScreenUtil().setHeight(750),
