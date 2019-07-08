@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../service/service_method.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'dart:convert';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 // class HomePage extends StatefulWidget {
 //   @override
 //   _HomePageState createState() => _HomePageState();
@@ -161,6 +162,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       child: Scaffold(
           appBar: AppBar(title: Text("百姓生活+")),
@@ -195,8 +197,11 @@ class SwiperDiy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 设置尺寸
+    ScreenUtil.instance=ScreenUtil(width: 750,height: 1334)..init(context);
     return Container(
-      height: 180.0,
+      height: ScreenUtil().setHeight(333),
+      width: ScreenUtil().setHeight(750),
       child: Swiper(
         itemBuilder: (BuildContext context,int index){
           return Image.network("${swiperDateList[index]['image']}",fit: BoxFit.fill,);
