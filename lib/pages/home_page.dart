@@ -33,17 +33,19 @@ class _HomePageState extends State<HomePage> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 var data = json.decode(snapshot.data.toString());
+                // 轮播图
                 List<Map> swiper = (data['data']['slides'] as List).cast();
-                List<Map> navgatorList =
-                    (data['data']['category'] as List).cast();
-                String adPicture =
-                    data['data']['advertesPicture']['PICTURE_ADDRESS'];
-                String leaderImage =
-                    data['data']['shopInfo']['leaderImage']; //店长图片
-                String leaderPhone =
-                    data['data']['shopInfo']['leaderPhone']; //店长电话
+                // 栅格
+                List<Map> navgatorList = (data['data']['category'] as List).cast();
+                // 广告
+                String adPicture = data['data']['advertesPicture']['PICTURE_ADDRESS'];
+                //店长图片
+                String leaderImage = data['data']['shopInfo']['leaderImage'];
+                //店长电话
+                String leaderPhone = data['data']['shopInfo']['leaderPhone'];
+                // 商品推荐
                 List<Map> recommendList =
-                    (data['data']['recommend'] as List).cast(); // 商品推荐
+                    (data['data']['recommend'] as List).cast();
                 return SingleChildScrollView(
                   child: Column(
                     children: <Widget>[
@@ -220,7 +222,7 @@ class Recommend extends StatelessWidget {
     return InkWell(
       onTap: () {},
       child: Container(
-        width: ScreenUtil().setWidth(280),
+        width: ScreenUtil().setWidth(290),
         padding: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
             color: Colors.white,
