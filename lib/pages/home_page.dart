@@ -3,7 +3,7 @@ import '../service/service_method.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'dart:convert';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -36,11 +36,16 @@ class _HomePageState extends State<HomePage> {
                 List<Map> swiper=(data['data']['slides'] as List).cast();
                 List<Map> navgatorList=(data['data']['category'] as List).cast();
                 String adPicture=data['data']['advertesPicture']['PICTURE_ADDRESS'];
+                String  leaderImage= data['data']['shopInfo']['leaderImage'];  //店长图片
+                String  leaderPhone = data['data']['shopInfo']['leaderPhone']; //店长电话
+
+                
                 return Column(
                   children: <Widget>[
                     SwiperDiy(swiperDateList:swiper),
                     TopNavigator(navgatorList:navgatorList),
-                    AdBanner(adPicture:adPicture)
+                    AdBanner(adPicture:adPicture),
+                    LeaderPhone(leaderImage:leaderImage,leaderPhone: leaderPhone),  //广告组件  
                   ],
                 );
               }else{
@@ -130,6 +135,33 @@ class AdBanner extends StatelessWidget {
       child: Image.network(adPicture),
     );
   }
+}
+
+// 店长电话
+class LeaderPhone extends StatelessWidget {
+  final String leaderImage;
+  final String leaderPhone;
+  const LeaderPhone({Key key,this.leaderImage,this.leaderPhone}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: InkWell(
+        onTap: _launchURL,
+        child: Image.network(leaderImage),
+      ),
+    );
+    
+  }
+   void _launchURL() async{
+    String url='tel:'+leaderPhone;
+    if(await canLaunch(url)){
+      await launch(url);
+    }else{
+      throw 'url不能访问,异常';
+    }
+  }
+ 
 }
 
 
