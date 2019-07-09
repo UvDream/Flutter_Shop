@@ -18,12 +18,12 @@ class _HomePageState extends State<HomePage>
   // 保持状态
   @override
   bool get wantKeepAlive => true;
-
+  var formData = {'lon':'115.02932','lat':'35.76189'};
   String homePageContent = "正在获取数据";
 
   @override
   void initState() {
-    getHomePageContent().then((val) {
+    request('homePageContext',formData:formData).then((val) {
       setState(() {
         homePageContent = val.toString();
       });
@@ -82,7 +82,8 @@ class _HomePageState extends State<HomePage>
                       FloorTitle(picture_address: floor2Title),
                       FloorContent(floorGoodsList: floor2),
                       FloorTitle(picture_address: floor3Title),
-                      FloorContent(floorGoodsList: floor3)
+                      FloorContent(floorGoodsList: floor3),
+                      HotGoods()
                     ],
                   ),
                 );
@@ -93,6 +94,28 @@ class _HomePageState extends State<HomePage>
               }
             },
           )),
+    );
+  }
+}
+
+class HotGoods extends StatefulWidget {
+  @override
+  _HotGoodsState createState() => _HotGoodsState();
+}
+
+
+class _HotGoodsState extends State<HotGoods> {
+  @override
+  void initState() {
+    super.initState();
+    request('homePageBelowConten').then((val){
+      print("--------++object--------${val}");
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      
     );
   }
 }
