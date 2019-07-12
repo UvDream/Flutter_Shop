@@ -19,7 +19,8 @@ class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin {
   int page = 1;
   List<Map> hotGoodsList = [];
-  GlobalKey<RefreshFooterState> _footerkey=new GlobalKey<RefreshFooterState>();
+  GlobalKey<RefreshFooterState> _footerkey =
+      new GlobalKey<RefreshFooterState>();
   // 保持状态
   @override
   bool get wantKeepAlive => true;
@@ -74,48 +75,49 @@ class _HomePageState extends State<HomePage>
                 List<Map> floor3 = (data['data']['floor3'] as List).cast();
                 return EasyRefresh(
                   refreshFooter: ClassicsFooter(
-                    key:_footerkey,
-                    bgColor:Colors.white,
+                    key: _footerkey,
+                    bgColor: Colors.white,
                     textColor: Colors.pink,
                     moreInfoColor: Colors.pink,
                     showMore: true,
                     noMoreText: '加载完成',
                     moreInfo: '加载中',
-                    loadReadyText:'上拉加载....',
-                    loadingText:'加载数据中',
+                    loadReadyText: '上拉加载....',
+                    loadingText: '加载数据中',
                   ),
-                    child: ListView(
-                  children: <Widget>[
-                    SwiperDiy(swiperDateList: swiper),
-                    TopNavigator(navgatorList: navgatorList),
-                    AdBanner(adPicture: adPicture),
-                    LeaderPhone(
-                        leaderImage: leaderImage,
-                        leaderPhone: leaderPhone), //广告组件
-                    Recommend(recommendList: recommendList),
-                    // 楼层标题
-                    FloorTitle(picture_address: floor1Title),
-                    FloorContent(floorGoodsList: floor1),
-                    FloorTitle(picture_address: floor2Title),
-                    FloorContent(floorGoodsList: floor2),
-                    FloorTitle(picture_address: floor3Title),
-                    FloorContent(floorGoodsList: floor3),
-                    _hotGoods()
-                  ],
-                ),
-                loadMore: ()async{
-                  print("加载中-----");
-                  var formData = {'page': page};
-                  await request('homePageBelowConten', formData: formData).then((val) {
-                    print("--------++object--------${val}");
-                    var data = json.decode(val.toString());
-                    List<Map> newGoodsList = (data['data'] as List).cast();
-                    setState(() {
-                      hotGoodsList.addAll(newGoodsList);
-                      page++;
+                  child: ListView(
+                    children: <Widget>[
+                      SwiperDiy(swiperDateList: swiper),
+                      TopNavigator(navgatorList: navgatorList),
+                      AdBanner(adPicture: adPicture),
+                      LeaderPhone(
+                          leaderImage: leaderImage,
+                          leaderPhone: leaderPhone), //广告组件
+                      Recommend(recommendList: recommendList),
+                      // 楼层标题
+                      FloorTitle(picture_address: floor1Title),
+                      FloorContent(floorGoodsList: floor1),
+                      FloorTitle(picture_address: floor2Title),
+                      FloorContent(floorGoodsList: floor2),
+                      FloorTitle(picture_address: floor3Title),
+                      FloorContent(floorGoodsList: floor3),
+                      _hotGoods()
+                    ],
+                  ),
+                  loadMore: () async {
+                    print("加载中-----");
+                    var formData = {'page': page};
+                    await request('homePageBelowConten', formData: formData)
+                        .then((val) {
+                      print("--------++object--------${val}");
+                      var data = json.decode(val.toString());
+                      List<Map> newGoodsList = (data['data'] as List).cast();
+                      setState(() {
+                        hotGoodsList.addAll(newGoodsList);
+                        page++;
+                      });
                     });
-                  });
-                },
+                  },
                 );
               } else {
                 return Center(
@@ -192,7 +194,6 @@ class _HomePageState extends State<HomePage>
       return Text('暂无数据');
     }
   }
-
   Widget _hotGoods() {
     return Container(
       child: Column(
@@ -201,24 +202,3 @@ class _HomePageState extends State<HomePage>
     );
   }
 }
-
-// class HotGoods extends StatefulWidget {
-//   @override
-//   _HotGoodsState createState() => _HotGoodsState();
-// }
-
-// class _HotGoodsState extends State<HotGoods> {
-//   @override
-//   void initState() {
-//     super.initState();
-//     request('homePageBelowConten',formData: '1').then((val){
-//       print("--------++object--------${val}");
-//     });
-//   }
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-
-//     );
-//   }
-// }
