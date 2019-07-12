@@ -118,6 +118,7 @@ class _HomePageState extends State<HomePage>
     margin: EdgeInsets.only(top: 10.0),
     alignment: Alignment.center,
     color: Colors.transparent,
+    padding: EdgeInsets.all(5.0),
     child: Text("火爆专区"),
   );
 //列表
