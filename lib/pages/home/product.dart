@@ -31,7 +31,7 @@ class Recommend extends StatelessWidget {
 
   Widget _recommedList(BuildContext context) {
     return Container(
-      height: ScreenUtil().setHeight(310),
+      height: ScreenUtil().setHeight(370),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: recommendList.length,
