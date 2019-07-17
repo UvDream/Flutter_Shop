@@ -6,6 +6,7 @@ import '../../model/category.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provide/provide.dart';
 import '../../provide/child_category.dart';
+
 // 左侧分类
 class LeftCatgegoryNav extends StatefulWidget {
   @override
@@ -45,8 +46,10 @@ class _LeftCatgegoryNavState extends State<LeftCatgegoryNav> {
     return InkWell(
       onTap: () {
         setState(() {
+          // 点击高亮
           listIndex = index;
         });
+        // 点击调用状态管理方法
         var childList = list[index].bxMallSubDto;
         Provide.value<ChildCategory>(context).getChildCategory(childList);
       },
@@ -54,6 +57,7 @@ class _LeftCatgegoryNavState extends State<LeftCatgegoryNav> {
         height: ScreenUtil().setHeight(100),
         padding: EdgeInsets.only(left: 10, top: 20),
         decoration: BoxDecoration(
+            // 点击高亮
             color: isClick ? Color.fromRGBO(236, 236, 236, 1.0) : Colors.white,
             border:
                 Border(bottom: BorderSide(width: 1, color: Colors.black12))),
@@ -65,6 +69,7 @@ class _LeftCatgegoryNavState extends State<LeftCatgegoryNav> {
     );
   }
 
+  // 获取数据
   void _getCategory() async {
     await request('getCategory').then((val) {
       var data = json.decode(val.toString());
@@ -74,7 +79,8 @@ class _LeftCatgegoryNavState extends State<LeftCatgegoryNav> {
       setState(() {
         list = category.data;
       });
-      Provide.value<ChildCategory>(context).getChildCategory(list[0].bxMallSubDto);
+      Provide.value<ChildCategory>(context)
+          .getChildCategory(list[0].bxMallSubDto);
     });
   }
 }
