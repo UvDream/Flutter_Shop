@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import '../../model/category.dart';
+// 屏幕适配方案
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+// Model 后台请求的数据
+import '../../model/category.dart';
+// 状态管理
 import 'package:provide/provide.dart';
 import '../../provide/child_category.dart';
 
