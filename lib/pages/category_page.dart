@@ -4,7 +4,7 @@ import './category/left_nav.dart';
 import './category/right_top.dart';
 // json
 import 'dart:convert';
-
+import '../pages/category/right_content.dart';
 
 class CategoryPage extends StatefulWidget {
   @override
@@ -33,38 +33,5 @@ class _CategoryPageState extends State<CategoryPage> {
       ),
     );
   }
-}
-
-// 商品列表
-class CategoryGoodsList extends StatefulWidget {
-  @override
-  _CategoryGoodsListState createState() => _CategoryGoodsListState();
-}
-
-class _CategoryGoodsListState extends State<CategoryGoodsList> {
-  @override
-  void initState() {
-    super.initState();
-    _getGoodsLIst();
-  }
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Text("xxx"),
-    );
-  }
-  void _getGoodsLIst() async{
-    var data={
-      'categoryId':'4',
-      'categorySubId':'',
-      'page':1
-    };
-    await request('getMallGoods',formData: data).then((val){
-      var data=json.decode(val.toString());
-      print("商品列表-----------${data}");
-    });
-  }
-
-
 }
 
