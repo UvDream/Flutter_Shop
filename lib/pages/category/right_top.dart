@@ -72,6 +72,7 @@ class _RightCategoryState extends State<RightCategory> {
       'categorySubId': categorySubId,
       'page': 1
     };
+    print(data);
     await request('getMallGoods', formData: data).then((val) {
       var data = json.decode(val.toString());
       CategoryGoodsListModel goodsList = CategoryGoodsListModel.fromJson(data);
