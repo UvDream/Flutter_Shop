@@ -85,7 +85,7 @@ class _LeftCatgegoryNavState extends State<LeftCatgegoryNav> {
         list = category.data;
       });
       Provide.value<ChildCategory>(context)
-          .getChildCategory(list[0].bxMallSubDto, list[0].mallCatgoryId);
+          .getChildCategory(list[0].bxMallSubDto, list[0].mallCategoryId);
     });
   }
 
