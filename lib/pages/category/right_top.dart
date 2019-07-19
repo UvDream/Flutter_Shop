@@ -6,6 +6,10 @@ import '../../model/category.dart';
 // 状态管理
 import 'package:provide/provide.dart';
 import '../../provide/child_category.dart';
+import '../../provide/category_goods_list.dart';
+import 'dart:convert';
+import '../../model/categoryGoodsList.dart';
+import '../../service/service_method.dart';
 
 // 右侧
 class RightCategory extends StatefulWidget {
@@ -30,7 +34,8 @@ class _RightCategoryState extends State<RightCategory> {
             scrollDirection: Axis.horizontal,
             itemCount: childCategory.childCategoryList.length,
             itemBuilder: (context, index) {
-              return _rightInkwell(childCategory.childCategoryList[index]);
+              return _rightInkwell(
+                  childCategory.childCategoryList[index], index);
             },
           ),
         );
@@ -38,16 +43,39 @@ class _RightCategoryState extends State<RightCategory> {
     );
   }
 
-  Widget _rightInkwell(BxMallSubDto item) {
+  Widget _rightInkwell(BxMallSubDto item, int index) {
+    bool isClick = false;
+    isClick = (index == Provide.value<ChildCategory>(context).childIndex)
+        ? true
+        : false;
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Provide.value<ChildCategory>(context).changeChildIndex(index);
+        _getGoodsLIst(item.mallSubId);
+      },
       child: Container(
         padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
         child: Text(
           item.mallSubName,
-          style: TextStyle(fontSize: ScreenUtil().setSp(28)),
+          style: TextStyle(
+              fontSize: ScreenUtil().setSp(28),
+              color: isClick ? Colors.pink : Colors.black),
         ),
       ),
     );
+  }
+
+  void _getGoodsLIst(String categorySubId) async {
+    var data = {
+      'categoryId': Provide.value<ChildCategory>(context).categoryId,
+      'categorySubId': categorySubId,
+      'page': 1
+    };
+    await request('getMallGoods', formData: data).then((val) {
+      var data = json.decode(val.toString());
+      CategoryGoodsListModel goodsList = CategoryGoodsListModel.fromJson(data);
+      Provide.value<CategoryGoodsListProvide>(context)
+          .getGoodsList(goodsList.data);
+    });
   }
 }

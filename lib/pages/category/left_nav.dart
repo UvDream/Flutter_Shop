@@ -54,7 +54,8 @@ class _LeftCatgegoryNavState extends State<LeftCatgegoryNav> {
         // 点击调用状态管理方法
         var childList = list[index].bxMallSubDto;
         var categoryId = list[index].mallCategoryId;
-        Provide.value<ChildCategory>(context).getChildCategory(childList);
+        Provide.value<ChildCategory>(context)
+            .getChildCategory(childList, categoryId);
         _getGoodsLIst(categoryId: categoryId);
       },
       child: Container(
@@ -84,7 +85,7 @@ class _LeftCatgegoryNavState extends State<LeftCatgegoryNav> {
         list = category.data;
       });
       Provide.value<ChildCategory>(context)
-          .getChildCategory(list[0].bxMallSubDto);
+          .getChildCategory(list[0].bxMallSubDto, list[0].mallCatgoryId);
     });
   }
 

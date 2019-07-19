@@ -2,10 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provide/provide.dart';
-import 'dart:convert';
-import '../../service/service_method.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../model/categoryGoodsList.dart';
 import '../../provide/category_goods_list.dart';
 
 // 商品列表
@@ -26,14 +23,15 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   Widget build(BuildContext context) {
     return Provide<CategoryGoodsListProvide>(
       builder: (context, child, data) {
-        return Container(
-          width: ScreenUtil().setWidth(570),
-          height: ScreenUtil().setHeight(985),
-          child: ListView.builder(
-            itemCount: data.goodsList.length,
-            itemBuilder: (context, index) {
-              return _listWidget(data.goodsList, index);
-            },
+        return Expanded(
+          child: Container(
+            width: ScreenUtil().setWidth(570),
+            child: ListView.builder(
+              itemCount: data.goodsList.length,
+              itemBuilder: (context, index) {
+                return _listWidget(data.goodsList, index);
+              },
+            ),
           ),
         );
       },
