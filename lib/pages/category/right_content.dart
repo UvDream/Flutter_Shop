@@ -20,6 +20,7 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   // List list = [];
   GlobalKey<RefreshFooterState> _footerkey =
       new GlobalKey<RefreshFooterState>();
+  var scorllController = new ScrollController();
   @override
   void initState() {
     super.initState();
@@ -29,6 +30,14 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   Widget build(BuildContext context) {
     return Provide<CategoryGoodsListProvide>(
       builder: (context, child, data) {
+        try {
+          if (Provide.value<ChildCategory>(context).page == 1) {
+            // 列表位置放到最上
+            scorllController.jumpTo(0.0);
+          }
+        } catch (e) {
+          print('第一次进入页面${e}');
+        }
         if (data.goodsList.length > 0) {
           return Expanded(
             child: Container(
@@ -47,6 +56,7 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
                     loadingText: '加载数据中',
                   ),
                   child: ListView.builder(
+                    controller: scorllController,
                     itemCount: data.goodsList.length,
                     itemBuilder: (context, index) {
                       return _listWidget(data.goodsList, index);
