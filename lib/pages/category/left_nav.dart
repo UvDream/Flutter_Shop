@@ -5,6 +5,8 @@ import '../../model/category.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provide/provide.dart';
 import '../../provide/child_category.dart';
+import '../../model/categoryGoodsList.dart';
+import '../../provide/category_goods_list.dart';
 
 // 左侧分类
 class LeftCatgegoryNav extends StatefulWidget {
@@ -20,6 +22,7 @@ class _LeftCatgegoryNavState extends State<LeftCatgegoryNav> {
   void initState() {
     super.initState();
     _getCategory();
+    _getGoodsLIst();
   }
 
   @override
@@ -50,7 +53,9 @@ class _LeftCatgegoryNavState extends State<LeftCatgegoryNav> {
         });
         // 点击调用状态管理方法
         var childList = list[index].bxMallSubDto;
+        var categoryId = list[index].mallCategoryId;
         Provide.value<ChildCategory>(context).getChildCategory(childList);
+        _getGoodsLIst(categoryId: categoryId);
       },
       child: Container(
         height: ScreenUtil().setHeight(100),
@@ -80,6 +85,25 @@ class _LeftCatgegoryNavState extends State<LeftCatgegoryNav> {
       });
       Provide.value<ChildCategory>(context)
           .getChildCategory(list[0].bxMallSubDto);
+    });
+  }
+
+  void _getGoodsLIst({String categoryId}) async {
+    var data = {
+      'categoryId': categoryId == null ? '4' : categoryId,
+      'categorySubId': '',
+      'page': 1
+    };
+    await request('getMallGoods', formData: data).then((val) {
+      var data = json.decode(val.toString());
+      CategoryGoodsListModel goodsList = CategoryGoodsListModel.fromJson(data);
+      // print('++++++++++商品内容+++++++++');
+      // print(goodsList);
+      // setState(() {
+      //   list = goodsList.data;
+      // });
+      Provide.value<CategoryGoodsListProvide>(context)
+          .getGoodsList(goodsList.data);
     });
   }
 }
