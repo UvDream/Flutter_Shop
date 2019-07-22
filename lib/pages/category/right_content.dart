@@ -9,6 +9,7 @@ import '../../provide/child_category.dart';
 import 'dart:convert';
 import '../../model/categoryGoodsList.dart';
 import '../../service/service_method.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // 商品列表
 class CategoryGoodsList extends StatefulWidget {
@@ -89,6 +90,13 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
       CategoryGoodsListModel goodsList = CategoryGoodsListModel.fromJson(data);
       if (goodsList.data == null) {
         Provide.value<ChildCategory>(context).changeNoMore('没有更多了');
+        Fluttertoast.showToast(
+            msg: '已经到底了',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            backgroundColor: Colors.pink,
+            textColor: Colors.white,
+            fontSize: 16.0);
       } else {
         Provide.value<CategoryGoodsListProvide>(context)
             .getMoreList(goodsList.data);
