@@ -24,7 +24,7 @@ class DetailPage extends StatelessWidget {
             if (snapshot.hasData) {
               return Container(
                 child: Column(
-                  children: <Widget>[DetailTopArea(), Description()],
+                  children: <Widget>[DetailTopArea()],
                 ),
               );
             } else {
@@ -35,19 +35,19 @@ class DetailPage extends StatelessWidget {
   }
 
 // 说明栏
-  Widget Description() {
-    return Container(
-      width: ScreenUtil().setWidth(750),
-      height: ScreenUtil().setHeight(100),
-      color: Colors.white,
-      padding: EdgeInsets.only(top: 16, left: 20),
-      margin: EdgeInsets.only(top: 10, bottom: 10),
-      child: Text(
-        '说明:>急速送达>正品保证',
-        style: TextStyle(color: Colors.redAccent),
-      ),
-    );
-  }
+  //Widget _desPage() {
+  //return Container(
+  // width: ScreenUtil().setWidth(750),
+  // height: ScreenUtil().setHeight(100),
+  // color: Colors.white,
+  // padding: EdgeInsets.only(top: 16, left: 20),
+  // margin: EdgeInsets.only(top: 10, bottom: 10),
+  // child: Text(
+  //   '说明:>急速送达>正品保证',
+  //   style: TextStyle(color: Colors.redAccent),
+  // ),
+  //);
+  //}
 
   Future _getBackInfo(BuildContext context) async {
     await Provide.value<DetailsInfoProvide>(context).getGoodsInfo(goodsId);
