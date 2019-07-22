@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../routers/application.dart';
 
 // 楼层
 class FloorTitle extends StatelessWidget {
@@ -24,39 +25,42 @@ class FloorContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-        children: <Widget>[_firstRow(), _otherGoods()],
+        children: <Widget>[_firstRow(context), _otherGoods(context)],
       ),
     );
   }
 
-  Widget _firstRow() {
+  Widget _firstRow(context) {
     return Row(
       children: <Widget>[
-        _goodsItem(floorGoodsList[1]),
+        _goodsItem(floorGoodsList[1], context),
         Column(
           children: <Widget>[
-            _goodsItem(floorGoodsList[2]),
-            _goodsItem(floorGoodsList[3]),
+            _goodsItem(floorGoodsList[2], context),
+            _goodsItem(floorGoodsList[3], context),
           ],
         )
       ],
     );
   }
 
-  Widget _otherGoods() {
+  Widget _otherGoods(context) {
     return Row(
       children: <Widget>[
-        _goodsItem(floorGoodsList[3]),
-        _goodsItem(floorGoodsList[4])
+        _goodsItem(floorGoodsList[3], context),
+        _goodsItem(floorGoodsList[4], context)
       ],
     );
   }
 
-  Widget _goodsItem(Map goods) {
+  Widget _goodsItem(Map goods, BuildContext context) {
     return Container(
       width: ScreenUtil().setWidth(375),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Application.router
+              .navigateTo(context, '/detail?id=${goods['goodsId']}');
+        },
         child: Image.network(goods['image']),
       ),
     );

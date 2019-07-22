@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../routers/application.dart';
 
 //商品推荐
 class Recommend extends StatelessWidget {
@@ -44,7 +45,10 @@ class Recommend extends StatelessWidget {
 
   Widget _item(index, context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Application.router.navigateTo(
+            context, '/detail?id=${recommendList[index]['goodsId']}');
+      },
       child: Container(
         width: ScreenUtil().setWidth(290),
         padding: EdgeInsets.all(8.0),
