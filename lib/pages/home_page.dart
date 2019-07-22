@@ -110,7 +110,7 @@ class _HomePageState extends State<HomePage>
                     var formData = {'page': page};
                     await request('homePageBelowConten', formData: formData)
                         .then((val) {
-                      print("--------++object--------${val}");
+                      // print("--------++object--------${val}");
                       var data = json.decode(val.toString());
                       List<Map> newGoodsList = (data['data'] as List).cast();
                       setState(() {
@@ -133,7 +133,7 @@ class _HomePageState extends State<HomePage>
   void _getHotGoods() {
     var formData = {'page': page};
     request('homePageBelowConten', formData: formData).then((val) {
-      print("--------++object--------${val}");
+      // print("--------++object--------${val}");
       var data = json.decode(val.toString());
       List<Map> newGoodsList = (data['data'] as List).cast();
       setState(() {
