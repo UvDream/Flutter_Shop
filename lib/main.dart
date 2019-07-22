@@ -33,12 +33,35 @@ class MyApp extends StatelessWidget {
     Application.router = router;
 
     return Container(
-      child: MaterialApp(
-        title: "百姓生活",
-        onGenerateRoute: Application.router.generator,
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(primaryColor: Colors.pink),
-        home: IndexPage(),
+      child: Container(
+        child: Row(
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(
+                            child: MaterialApp(
+                              title: "百姓生活",
+                              onGenerateRoute: Application.router.generator,
+                              debugShowCheckedModeBanner: false,
+                              theme: ThemeData(primaryColor: Colors.pink),
+                              home: IndexPage(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -5,8 +5,11 @@ class DetailPage extends StatelessWidget {
   DetailPage(this.goodsId);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('商品ID为${goodsId}'),
+    return Scaffold(
+      appBar: AppBar(title: Text("商品详情")),
+      body: Container(
+        child: Text(goodsId),
+      ),
     );
   }
 }
