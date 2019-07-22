@@ -9,6 +9,7 @@ import './home/advertise.dart';
 import './home/leader.dart';
 import './home/product.dart';
 import './home/floor.dart';
+import '../routers/application.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -154,7 +155,10 @@ class _HomePageState extends State<HomePage>
     if (hotGoodsList.length != 0) {
       List<Widget> listWidget = hotGoodsList.map((val) {
         return InkWell(
-          onTap: () {},
+          onTap: () {
+            Application.router
+                .navigateTo(context, '/detail?id=${val['goodsId']}');
+          },
           child: Container(
             width: ScreenUtil().setWidth(372),
             color: Colors.white,
@@ -194,6 +198,7 @@ class _HomePageState extends State<HomePage>
       return Text('暂无数据');
     }
   }
+
   Widget _hotGoods() {
     return Container(
       child: Column(
