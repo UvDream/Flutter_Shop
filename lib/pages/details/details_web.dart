@@ -12,8 +12,19 @@ class DetailsWeb extends StatelessWidget {
         .data
         .goodInfo
         .goodsDetail;
-    return Container(
-      child: Html(data: goodsDetails),
+    return Provide<DetailsInfoProvide>(
+      builder: (context, child, val) {
+        var isLeft = Provide.value<DetailsInfoProvide>(context).isLeft;
+        if (isLeft) {
+          return Container(child: Html(data: goodsDetails));
+        } else {
+          return Container(
+            width: ScreenUtil().setWidth(750),
+            padding: EdgeInsets.all(10),
+            child: Text('暂无数据!'),
+          );
+        }
+      },
     );
   }
 }
