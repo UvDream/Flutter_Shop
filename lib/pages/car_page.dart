@@ -1,75 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provide/provide.dart';
+import '../provide/car.dart';
 
-class CarPage extends StatefulWidget {
-  @override
-  _CarPageState createState() => _CarPageState();
-}
-
-class _CarPageState extends State<CarPage> {
-  List<String> testList = [];
-
+class CarPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    _show();
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Container(
-            height: 500,
-            child: ListView.builder(
-              itemCount: testList.length,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("购物车"),
+      ),
+      body: FutureBuilder(
+        future: _getCarInfo(context),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List carList = Provide.value<CarProvide>(context).carList;
+            return ListView.builder(
+              itemCount: carList.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(testList[index]),
+                  title: Text(carList[index].goodsName),
                 );
               },
-            ),
-          ),
-          RaisedButton(
-            onPressed: () {
-              _add();
-            },
-            child: Text('增加'),
-          ),
-          RaisedButton(
-            onPressed: () {
-              _clear();
-            },
-            child: Text('清空'),
-          ),
-        ],
+            );
+          } else {
+            return Text("正在加载");
+          }
+        },
       ),
     );
   }
 
-//  增加方法
-  void _add() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String temp = '呵呵';
-    testList.add(temp);
-    prefs.setStringList('testInfo', testList);
-    _show();
-  }
-
-//  查询
-  void _show() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getStringList('testInfo') != null) {
-      setState(() {
-        testList = prefs.getStringList('testInfo');
-      });
-    }
-  }
-
-//  删除
-  void _clear() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-//    全部删除
-//    prefs.clear();
-    prefs.remove('testInfo');
-    setState(() {
-      testList = [];
-    });
+  Future<String> _getCarInfo(BuildContext context) async {
+    await Provide.value<CarProvide>(context).getCarInfo();
+    return 'end';
   }
 }
