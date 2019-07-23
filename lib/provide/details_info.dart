@@ -5,6 +5,8 @@ import 'dart:convert';
 
 class DetailsInfoProvide with ChangeNotifier {
   DetailsModel goodsInfo = null;
+  bool isLeft = true;
+  bool isRight = false;
   //从后台获取数据
   getGoodsInfo(String id) {
     var formData = {'goodId': id};
@@ -15,5 +17,17 @@ class DetailsInfoProvide with ChangeNotifier {
       goodsInfo = DetailsModel.fromJson(res);
       notifyListeners();
     });
+  }
+
+  // tabbar切换
+  changeLeftAndRight(String changeState) {
+    if (changeState == 'left') {
+      isLeft = true;
+      isRight = false;
+    } else {
+      isLeft = false;
+      isRight = true;
+    }
+    notifyListeners();
   }
 }
