@@ -35,7 +35,10 @@ class CarItem extends StatelessWidget {
       child: Checkbox(
         value: item.isCheck,
         activeColor: Colors.pink,
-        onChanged: (bool val) {},
+        onChanged: (bool val) {
+          item.isCheck = val;
+          Provide.value<CarProvide>(context).changeCheckState(item);
+        },
       ),
     );
   }

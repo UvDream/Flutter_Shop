@@ -27,9 +27,11 @@ class CarBottom extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Checkbox(
-            value: true,
+            value: Provide.value<CarProvide>(context).isAllCheck,
             activeColor: Colors.pink,
-            onChanged: (bool val) {},
+            onChanged: (bool val) {
+              Provide.value<CarProvide>(context).changeAllCheckBtnState(val);
+            },
           ),
           Text("全选")
         ],

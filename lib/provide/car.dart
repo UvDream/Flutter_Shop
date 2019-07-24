@@ -10,6 +10,7 @@ class CarProvide with ChangeNotifier {
 
   double allPrice = 0; //总价格
   int allGoodsCount = 0; //商品总数量
+  bool isAllCheck = true; //全选
 // 保存
   save(goodsId, goodsName, count, price, images) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -67,10 +68,13 @@ class CarProvide with ChangeNotifier {
       List<Map> tempList = (json.decode(carString.toString()) as List).cast();
       allPrice = 0;
       allGoodsCount = 0;
+      isAllCheck = true;
       tempList.forEach((item) {
         if (item['isCheck']) {
           allPrice += item['count'] * item['price'];
           allGoodsCount += item['count'];
+        } else {
+          isAllCheck = false;
         }
         carList.add(CarInfoModel.fromJson(item));
       });
@@ -112,6 +116,22 @@ class CarProvide with ChangeNotifier {
     });
     tempList[changeIndex] = carItem.toJson();
     carString = json.encode(tempList).toString();
+    prefs.setString('carInfo', carString);
+    await getCarInfo();
+  }
+
+//  点击全选按钮操作
+  changeAllCheckBtnState(bool isCheck) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    carString = prefs.getString('carInfo');
+    List<Map> tempList = (json.decode(carString.toString()) as List).cast();
+    List<Map> newList = [];
+    for (var item in tempList) {
+      var newItem = item;
+      newItem['isCheck'] = isCheck;
+      newList.add(newItem);
+    }
+    carString = json.encode(newList).toString();
     prefs.setString('carInfo', carString);
     await getCarInfo();
   }
