@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provide/provide.dart';
+import '../../provide/car.dart';
 
 class CarBottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(5.0),
-      color: Colors.white,
-      child: Row(
-        children: <Widget>[_selectAllBt(), _allPriceArea(), _goButton()],
-      ),
-    );
+        padding: EdgeInsets.all(5.0),
+        color: Colors.white,
+        child: Provide<CarProvide>(builder: (context, child, val) {
+          return Row(
+            children: <Widget>[
+              _selectAllBt(context),
+              _allPriceArea(context),
+              _goButton(context)
+            ],
+          );
+        }));
   }
 
   // 全选
-  Widget _selectAllBt() {
+  Widget _selectAllBt(context) {
     return Container(
       child: Row(
         children: <Widget>[
@@ -31,7 +38,8 @@ class CarBottom extends StatelessWidget {
   }
 
   // 合计
-  Widget _allPriceArea() {
+  Widget _allPriceArea(context) {
+    double allPrice = Provide.value<CarProvide>(context).allPrice;
     return Container(
       width: ScreenUtil().setWidth(430),
       child: Column(
@@ -49,7 +57,7 @@ class CarBottom extends StatelessWidget {
               Container(
                 alignment: Alignment.centerLeft,
                 width: ScreenUtil().setWidth(150),
-                child: Text('1992',
+                child: Text('¥${allPrice}',
                     style: TextStyle(fontSize: 20, color: Colors.red)),
               )
             ],
@@ -67,7 +75,8 @@ class CarBottom extends StatelessWidget {
   }
 
   // 结算
-  Widget _goButton() {
+  Widget _goButton(context) {
+    int allGoodsCount = Provide.value<CarProvide>(context).allGoodsCount;
     return Container(
       width: ScreenUtil().setSp(160),
       padding: EdgeInsets.only(left: 10),
@@ -79,7 +88,7 @@ class CarBottom extends StatelessWidget {
           decoration: BoxDecoration(
               color: Colors.red, borderRadius: BorderRadius.circular(3.0)),
           child: Text(
-            '结算(6)',
+            '结算(${allGoodsCount})',
             style: TextStyle(color: Colors.white),
           ),
         ),
