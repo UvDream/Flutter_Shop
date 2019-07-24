@@ -7,6 +7,9 @@ class CarProvide with ChangeNotifier {
   String carString = "[]";
 
   List<CarInfoModel> carList = [];
+
+  double allPrice = 0; //总价格
+  int allGoodsCount = 0; //商品总数量
 // 保存
   save(goodsId, goodsName, count, price, images) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -29,7 +32,8 @@ class CarProvide with ChangeNotifier {
         'goodsName': goodsName,
         'count': count,
         'price': price,
-        'images': images
+        'images': images,
+        'isCheck': true
       };
       tempList.add(newGoods);
       carList.add(CarInfoModel.fromJson(newGoods));
@@ -61,10 +65,35 @@ class CarProvide with ChangeNotifier {
       carList = [];
     } else {
       List<Map> tempList = (json.decode(carString.toString()) as List).cast();
+      allPrice = 0;
+      allGoodsCount = 0;
       tempList.forEach((item) {
+        if (item['isCheck']) {
+          allPrice += item['count'] * item['price'];
+          allGoodsCount += item['count'];
+        }
         carList.add(CarInfoModel.fromJson(item));
       });
     }
     notifyListeners();
+  }
+
+//  删除单个购物车商品
+  deleteOneGoods(String goodsId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    carString = prefs.getString('carInfo');
+    List<Map> tempList = (json.decode(carString.toString()) as List).cast();
+    int tempIndex = 0;
+    int delIndex = 0;
+    tempList.forEach((item) {
+      if (item['goodsId'] == goodsId) {
+        delIndex = tempIndex;
+      }
+      tempIndex++;
+    });
+    tempList.removeAt(delIndex);
+    carString = json.encode(tempList);
+    prefs.setString('carInfo', carString);
+    await getCarInfo();
   }
 }

@@ -18,10 +18,15 @@ class CarPage extends StatelessWidget {
             List carList = Provide.value<CarProvide>(context).carList;
             return Stack(
               children: <Widget>[
-                ListView.builder(
-                  itemCount: carList.length,
-                  itemBuilder: (context, index) {
-                    return CarItem(carList[index]);
+                Provide<CarProvide>(
+                  builder: (context, child, childCategory) {
+                    carList = Provide.value<CarProvide>(context).carList;
+                    return ListView.builder(
+                      itemCount: carList.length,
+                      itemBuilder: (context, index) {
+                        return CarItem(carList[index]);
+                      },
+                    );
                   },
                 ),
                 Positioned(
