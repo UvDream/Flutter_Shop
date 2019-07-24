@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provide/provide.dart';
 import '../provide/car.dart';
+import './car/car_item.dart';
 
 class CarPage extends StatelessWidget {
   @override
@@ -17,9 +18,7 @@ class CarPage extends StatelessWidget {
             return ListView.builder(
               itemCount: carList.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(carList[index].goodsName),
-                );
+                return CarItem(carList[index]);
               },
             );
           } else {
