@@ -96,4 +96,23 @@ class CarProvide with ChangeNotifier {
     prefs.setString('carInfo', carString);
     await getCarInfo();
   }
+
+// 改变
+  changeCheckState(CarInfoModel carItem) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    carString = prefs.getString('carInfo');
+    List<Map> tempList = (json.decode(carString.toString()) as List).cast();
+    int tempIndex = 0;
+    int changeIndex = 0;
+    tempList.forEach((item) {
+      if (item["goodsId"] == carItem.goodsId) {
+        changeIndex = tempIndex;
+      }
+      tempIndex++;
+    });
+    tempList[changeIndex] = carItem.toJson();
+    carString = json.encode(tempList).toString();
+    prefs.setString('carInfo', carString);
+    await getCarInfo();
+  }
 }
