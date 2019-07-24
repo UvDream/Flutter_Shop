@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../model/car_info.dart';
+import './car_count.dart';
+import 'package:provide/provide.dart';
+import '../../provide/car.dart';
 
 class CarItem extends StatelessWidget {
   final CarInfoModel item;
@@ -17,20 +20,20 @@ class CarItem extends StatelessWidget {
           border: Border(bottom: BorderSide(width: 1, color: Colors.black12))),
       child: Row(
         children: <Widget>[
-          _carCheckBt(item),
+          _carCheckBt(context, item),
           _carImage(item),
           _carGoodsName(item),
-          _carPrice(item)
+          _carPrice(context, item)
         ],
       ),
     );
   }
 
 // 单选框
-  Widget _carCheckBt(item) {
+  Widget _carCheckBt(context, item) {
     return Container(
       child: Checkbox(
-        value: true,
+        value: item.isCheck,
         activeColor: Colors.pink,
         onChanged: (bool val) {},
       ),
@@ -55,13 +58,13 @@ class CarItem extends StatelessWidget {
       padding: EdgeInsets.all(10),
       alignment: Alignment.topLeft,
       child: Column(
-        children: <Widget>[Text(item.goodsName)],
+        children: <Widget>[Text(item.goodsName), CarCount()],
       ),
     );
   }
 
   // 商品价格
-  Widget _carPrice(item) {
+  Widget _carPrice(context, item) {
     return Container(
       width: ScreenUtil().setWidth(150),
       alignment: Alignment.centerRight,
@@ -70,7 +73,9 @@ class CarItem extends StatelessWidget {
           Text('¥${item.price}'),
           Container(
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                Provide.value<CarProvide>(context).deleteOneGoods(item.goodsId);
+              },
               child:
                   Icon(Icons.delete_forever, color: Colors.black26, size: 30),
             ),
