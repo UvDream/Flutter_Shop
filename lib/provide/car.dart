@@ -19,11 +19,17 @@ class CarProvide with ChangeNotifier {
     List<Map> tempList = (temp as List).cast();
     bool isHave = false;
     int ival = 0;
+    allPrice = 0;
+    allGoodsCount = 0;
     tempList.forEach((item) {
       if (item['goodsId'] == goodsId) {
         tempList[ival]['count'] = item['count'] + 1;
         carList[ival].count++;
         isHave = true;
+      }
+      if (item['isCheck']) {
+        allPrice += (carList[ival].price * carList[ival].count);
+        allGoodsCount += carList[ival].count;
       }
       ival++;
     });
@@ -38,6 +44,8 @@ class CarProvide with ChangeNotifier {
       };
       tempList.add(newGoods);
       carList.add(CarInfoModel.fromJson(newGoods));
+      allPrice += (count * price);
+      allGoodsCount += count;
     }
 
     carString = json.encode(tempList).toString();
