@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provide/provide.dart';
+import '../../provide/car.dart';
 
 class CarCount extends StatelessWidget {
+  var item;
+  CarCount(this.item);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -10,31 +14,35 @@ class CarCount extends StatelessWidget {
       decoration:
           BoxDecoration(border: Border.all(width: 1, color: Colors.black12)),
       child: Row(
-        children: <Widget>[_reduceBtn(), _countArea(), _addBtn()],
+        children: <Widget>[_reduceBtn(context), _countArea(), _addBtn(context)],
       ),
     );
   }
 
 //  减少按钮
-  Widget _reduceBtn() {
+  Widget _reduceBtn(context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Provide.value<CarProvide>(context).addOrReduceAction(item, 'reduce');
+      },
       child: Container(
         width: ScreenUtil().setWidth(45),
         height: ScreenUtil().setHeight(45),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: item.count > 1 ? Colors.white : Colors.black12,
             border: Border(right: BorderSide(width: 1, color: Colors.black12))),
-        child: Text('-'),
+        child: item.count > 1 ? Text('-') : Text(''),
       ),
     );
   }
 
 //  加号按钮
-  Widget _addBtn() {
+  Widget _addBtn(context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Provide.value<CarProvide>(context).addOrReduceAction(item, 'add');
+      },
       child: Container(
         width: ScreenUtil().setWidth(45),
         height: ScreenUtil().setHeight(45),
@@ -54,7 +62,7 @@ class CarCount extends StatelessWidget {
       height: ScreenUtil().setHeight(45),
       alignment: Alignment.center,
       color: Colors.white,
-      child: Text('1'),
+      child: Text('${item.count}'),
     );
   }
 }
