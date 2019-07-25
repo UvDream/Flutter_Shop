@@ -61,7 +61,7 @@ class CarItem extends StatelessWidget {
       padding: EdgeInsets.all(10),
       alignment: Alignment.topLeft,
       child: Column(
-        children: <Widget>[Text(item.goodsName), CarCount()],
+        children: <Widget>[Text(item.goodsName), CarCount(item)],
       ),
     );
   }

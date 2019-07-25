@@ -19,11 +19,17 @@ class CarProvide with ChangeNotifier {
     List<Map> tempList = (temp as List).cast();
     bool isHave = false;
     int ival = 0;
+    allPrice = 0;
+    allGoodsCount = 0;
     tempList.forEach((item) {
       if (item['goodsId'] == goodsId) {
         tempList[ival]['count'] = item['count'] + 1;
         carList[ival].count++;
         isHave = true;
+      }
+      if (item['isCheck']) {
+        allPrice += (carList[ival].price * carList[ival].count);
+        allGoodsCount += carList[ival].count;
       }
       ival++;
     });
@@ -38,6 +44,8 @@ class CarProvide with ChangeNotifier {
       };
       tempList.add(newGoods);
       carList.add(CarInfoModel.fromJson(newGoods));
+      allPrice += (count * price);
+      allGoodsCount += count;
     }
 
     carString = json.encode(tempList).toString();
@@ -132,6 +140,30 @@ class CarProvide with ChangeNotifier {
       newList.add(newItem);
     }
     carString = json.encode(newList).toString();
+    prefs.setString('carInfo', carString);
+    await getCarInfo();
+  }
+
+  // 商品数量加减
+  addOrReduceAction(var carItem, String todo) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    carString = prefs.getString('carInfo');
+    List<Map> tempList = (json.decode(carString.toString()) as List).cast();
+    int tempIndex = 0;
+    int changeIndex = 0;
+    tempList.forEach((item) {
+      if (item['goodsId'] == carItem.goodsId) {
+        changeIndex = tempIndex;
+      }
+      tempIndex++;
+    });
+    if (todo == 'add') {
+      carItem.count++;
+    } else if (carItem.count > 1) {
+      carItem.count--;
+    }
+    tempList[changeIndex] = carItem.toJson();
+    carString = json.encode(tempList).toString();
     prefs.setString('carInfo', carString);
     await getCarInfo();
   }
