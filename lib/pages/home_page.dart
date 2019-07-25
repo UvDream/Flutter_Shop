@@ -22,6 +22,7 @@ class _HomePageState extends State<HomePage>
   List<Map> hotGoodsList = [];
   GlobalKey<RefreshFooterState> _footerkey =
       new GlobalKey<RefreshFooterState>();
+
   // 保持状态
   @override
   bool get wantKeepAlive => true;
@@ -89,11 +90,15 @@ class _HomePageState extends State<HomePage>
                   child: ListView(
                     children: <Widget>[
                       SwiperDiy(swiperDateList: swiper),
-                      TopNavigator(navgatorList: navgatorList),
+                      Container(
+                        height: ScreenUtil().setHeight(320),
+                        child: TopNavigator(navgatorList: navgatorList),
+                      ),
                       AdBanner(adPicture: adPicture),
                       LeaderPhone(
                           leaderImage: leaderImage,
                           leaderPhone: leaderPhone), //广告组件
+
                       Recommend(recommendList: recommendList),
                       // 楼层标题
                       FloorTitle(picture_address: floor1Title),
@@ -150,6 +155,7 @@ class _HomePageState extends State<HomePage>
     padding: EdgeInsets.all(5.0),
     child: Text("火爆专区"),
   );
+
 //列表
   Widget _wrapList() {
     if (hotGoodsList.length != 0) {

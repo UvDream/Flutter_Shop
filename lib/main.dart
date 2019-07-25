@@ -5,11 +5,14 @@ import './provide/counter.dart';
 import './provide/child_category.dart';
 import './provide/category_goods_list.dart';
 import 'package:fluro/fluro.dart';
+
 // 注册路由
 import './routers/routes.dart';
 import './routers/application.dart';
+
 // 详情页面
 import './provide/details_info.dart';
+
 // 购物车
 import './provide/car.dart';
 
