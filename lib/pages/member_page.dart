@@ -10,7 +10,12 @@ class MemberPage extends StatelessWidget {
           title: Text('个人中心'),
         ),
         body: ListView(
-          children: <Widget>[_topHeader(), _orderTitle(), _orderType()],
+          children: <Widget>[
+            _topHeader(),
+            _orderTitle(),
+            _orderType(),
+            _actionList()
+          ],
         ));
   }
 
@@ -112,6 +117,32 @@ class MemberPage extends StatelessWidget {
               ],
             ),
           )
+        ],
+      ),
+    );
+  }
+
+  Widget _myListTile(title) {
+    return Container(
+      child: ListTile(
+        leading: Icon(Icons.blur_circular),
+        title: Text(title),
+        trailing: Icon(Icons.arrow_right),
+      ),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(bottom: BorderSide(width: 1, color: Colors.black12))),
+    );
+  }
+
+  Widget _actionList() {
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+      child: Column(
+        children: <Widget>[
+          _myListTile('领取优惠券'),
+          _myListTile('已领取优惠券'),
+          _myListTile('关于我们')
         ],
       ),
     );
