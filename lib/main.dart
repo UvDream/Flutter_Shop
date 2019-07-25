@@ -12,6 +12,7 @@ import './routers/application.dart';
 import './provide/details_info.dart';
 // 购物车
 import './provide/car.dart';
+import './provide/current_index.dart';
 
 void main() {
   var counter = Counter();
@@ -20,6 +21,7 @@ void main() {
   var categoryGoodsListProvide = CategoryGoodsListProvide();
   var detailInfoProvide = DetailsInfoProvide();
   var carProvide = CarProvide();
+  var currentIndexProvide = CurrentIndexProvide();
   providers
     ..provide(Provider<Counter>.value(counter))
     ..provide(Provider<ChildCategory>.value(childCategory))
@@ -28,7 +30,8 @@ void main() {
         Provider<CategoryGoodsListProvide>.value(categoryGoodsListProvide))
     // 详情
     ..provide(Provider<DetailsInfoProvide>.value(detailInfoProvide))
-    ..provide(Provider<CarProvide>.value(carProvide));
+    ..provide(Provider<CarProvide>.value(carProvide))
+    ..provide(Provider<CurrentIndexProvide>.value(currentIndexProvide));
 
   runApp(ProviderNode(child: MyApp(), providers: providers));
 }
